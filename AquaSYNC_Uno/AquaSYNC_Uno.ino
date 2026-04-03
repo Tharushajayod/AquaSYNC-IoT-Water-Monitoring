@@ -3,9 +3,7 @@
  * Component: Arduino Uno (Display & Sensor Master)
  * Description:
  * Reads ultrasonic levels and analog pH values. Communicates with the ESP32 via UART 
- * to exchange sensor data and receive pump statuses. Implements an EMI noise 
- * suppression mechanism (value freezing) to prevent corrupted pH readings 
- * during high-voltage pump operation.
+ * to exchange sensor data and receive pump statuses for LCD display.
  */
 
 #include <LiquidCrystal.h>
@@ -25,10 +23,6 @@ float mainDist = 0;
 float sourceDist = 0;
 float phValue = 7.0;
 float phVoltage = 0.0;
-
-// Variables for EMI Noise Suppression (Value Freezing)
-float lastGoodPH = 7.0;
-float lastGoodPHVoltage = 0.0;
 
 // Data received from ESP32
 int pump1Status = 0;
@@ -99,17 +93,8 @@ void loop() {
   mainDist = readDistance(PIN_TRIG_MAIN, PIN_ECHO_MAIN); delay(50);
   sourceDist = readDistance(PIN_TRIG_SOURCE, PIN_ECHO_SOURCE); delay(50);
   
-  // 2. Read pH Sensor with EMI Noise Suppression (Freezing Logic)
-  // Only read new pH values if the main high-voltage pump is OFF
-  if (pump1Status == 0) {
-    readPH();
-    lastGoodPH = phValue;
-    lastGoodPHVoltage = phVoltage;
-  } else {
-    // Hold the last known good value to prevent display fluctuations
-    phValue = lastGoodPH;
-    phVoltage = lastGoodPHVoltage;
-  }
+  // 2. Read current pH Sensor value continuously
+  readPH();
 
   // 3. Transmit Data to ESP32 (Format: MainDist,SourceDist,pHValue,pHVoltage\n)
   Serial.print(mainDist); Serial.print(",");
@@ -146,23 +131,18 @@ void loop() {
   float displayTemp = constrain(tempValue, 0.0, 80.0);
 
   // 6. Update LCD Display UI
-  
-  // Row 1: Tank Levels
   lcd.setCursor(0, 0); 
   lcd.print("Main:"); lcd.print((int)mainPct); lcd.print("%  ");
   lcd.print("Src:"); lcd.print((int)sourcePct); lcd.print("%   ");
   
-  // Row 2: Water Quality (pH & Temp)
   lcd.setCursor(0, 1); 
   lcd.print("pH: "); lcd.print(displayPH, 1); lcd.print("  ");
   lcd.print("Temp: "); lcd.print(displayTemp, 1); lcd.print("C  ");
   
-  // Row 3: Pump Statuses
   lcd.setCursor(0, 2);
   lcd.print("P1:"); lcd.print(pump1Status == 1 ? "ON " : "OFF");
   lcd.print("    P2:"); lcd.print(pump2Status == 1 ? "ON " : "OFF");
 
-  // Row 4: System Status Footer
   lcd.setCursor(0, 3);
   lcd.print("System Active       ");
 
