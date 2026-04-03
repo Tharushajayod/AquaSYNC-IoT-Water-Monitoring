@@ -1,10 +1,9 @@
 /**
  * Project: AquaSYNC - Smart Water Tank Monitoring System
  * Component: ESP32 Main Controller
- * * Description: 
+ * Description: 
  * Handles Wi-Fi connectivity, Blynk IoT dashboard synchronization, 
- * logic processing for dual pumps (Water & pH), and safety interlocks.
- * Includes sensor noise suppression (value freezing) during high-load pump operation.
+ * logic processing for dual pumps (Water & pH), and alarms.
  */
 
 #define BLYNK_TEMPLATE_ID "TMPL6q0KLYKJ-"
@@ -47,7 +46,6 @@ BlynkTimer timer;
 
 // System Variables
 float mainDist = 0, sourceDist = 0, phValue = 7.0, phVoltage = 0.0, tempC = 0.0;
-float lastGoodTemp = 0.0; // Variable to hold the last stable temperature reading
 
 // Manual Control Flags (Blynk Integration)
 bool pump1ManualMode = false; 
@@ -94,17 +92,9 @@ void processSystemLogic() {
   // Check current status of Pump 1
   bool isPump1On = (digitalRead(PUMP1_PIN) == LOW);
 
-  // --- Temperature Freezing Logic (Interference Bypass) ---
+  // Read current Temperature continuously
   sensors.requestTemperatures();
-  float rawTemp = sensors.getTempCByIndex(0);
-  
-  // Hold the last known good temperature if the main pump is running to avoid EMI noise
-  if (!isPump1On) {
-    tempC = rawTemp;
-    lastGoodTemp = tempC;
-  } else {
-    tempC = lastGoodTemp; 
-  }
+  tempC = sensors.getTempCByIndex(0);
 
   // --- 1. Main Water Pump (Pump 1) Logic ---
   bool physicalSw1 = (digitalRead(SWITCH1_PIN) == LOW);
@@ -153,7 +143,6 @@ void processSystemLogic() {
   Serial2.println(tempC);
 
   // --- 5. System Alarms & LED Indicators ---
-  // Source Tank Low Alarm
   if(sourceLevelPct < 10) {
     digitalWrite(LED_RED, HIGH); digitalWrite(LED_GREEN, LOW); 
     digitalWrite(BUZZER_WATER, (millis()/300) % 2); // Fast beep
@@ -164,13 +153,11 @@ void processSystemLogic() {
       sourceLowAlertSent = true; 
     }
   } 
-  // Main Tank Critically Low Alarm
   else if(mainLevelPct < 5) {
     digitalWrite(LED_RED, HIGH); digitalWrite(LED_GREEN, LOW); 
     digitalWrite(BUZZER_WATER, (millis()/700) % 2); // Slow beep
     sourceLowAlertSent = false; 
   } 
-  // Normal State
   else {
     digitalWrite(BUZZER_WATER, LOW); 
     sourceLowAlertSent = false; 
