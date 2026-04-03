@@ -1,6 +1,7 @@
 # 💧 AquaSYNC: Smart IoT Water Quality & Level Management System
 
-*Sense the flow. Save the future.* **AquaSYNC** is an advanced, integrated solution for automated water tank management. Combining precision hardware sensing with cutting-edge Internet of Things (IoT) technology, AquaSYNC ensures your water supply is continuously monitored, managed, and maintained at optimal levels and quality. 
+*Sense the flow. Save the future.* ![WhatsApp Image 2025-12-21 at 12 02 01 PM](https://github.com/user-attachments/assets/fda74bc5-b167-4562-8f9b-aa43e8d8ba85) **AquaSYNC** is an advanced, integrated solution for automated water tank management. Combining precision har
+dware sensing with cutting-edge Internet of Things (IoT) technology, AquaSYNC ensures your water supply is continuously monitored, managed, and maintained at optimal levels and quality. 
 
 This dual-microcontroller system utilizes an **Arduino Uno** for master sensor data processing and an **ESP32** as an IoT gateway to interface with the Blynk 2.0 platform.
 
@@ -72,12 +73,15 @@ The system features a robust physical alert mechanism utilizing 6 distinct LEDs 
 ### 🧪 pH Quality Status
 * **⚪ White LED (Optimal):** Water pH is perfectly balanced (between 6.0 and 8.0).
 * **🟠 Orange LED (Warning):** pH is out of bounds (< 6.0 or > 8.0). Automated dosing correction required.
-
+![IMG-20260110-WA0096](https://github.com/user-attachments/assets/725dba2d-8ad1-4693-a41d-a05e61bdd24b)
 ---
+
 
 ## 📱 IoT Dashboard (Blynk)
 
 The system connects to the internet via Wi-Fi to provide a comprehensive mobile dashboard. The dashboard includes visual gauges for tank capacities and water quality, LED status indicators for both pumps, and push notifications for critical alerts (e.g., "Warning: Source Tank water is below 10%!").
+![IMG-20260110-WA0106](https://github.com/user-attachments/assets/60ed5ff8-b5f2-4d3e-8d38-9e750bff1f9b)
+<img width="369" height="795" alt="image" src="https://github.com/user-attachments/assets/c05e235b-00ee-4c80-bc2f-f8918a7e481b" />
 
 ---
 
