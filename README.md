@@ -9,7 +9,7 @@ This dual-microcontroller system utilizes an **Arduino Uno** for master sensor d
 ## ✨ Key Features
 
 * **Advanced Pump Automation:** Fully autonomous logic to control both the main water pump and the pH dosing pump based on real-time sensor data.
-* **Smart Alarms & Indicators (LED & Buzzer):** Comprehensive visual and audio alert system to notify users of critical water levels and temperature warnings instantly.
+* **Comprehensive Visual Indicators:** A 6-LED physical dashboard providing instant status updates for water levels, temperature, and pH quality.
 * **Dual-Tank Ultrasonic Monitoring:** Real-time level measurement of both the Main storage tank and the Source tank.
 * **Water Quality Sensing:** Precision monitoring of water pH level and Temperature.
 * **Hardware Safety Interlocks:** The pH pump is logically disabled whenever the high-voltage water pump is running to ensure safe and accurate dosing.
@@ -28,7 +28,7 @@ The system integrates the following primary components:
 4. **Level Sensors:** HC-SR04 Ultrasonic Sensors 
 5. **Quality Sensors:** SEN0161 pH Sensor & DS18B20 Waterproof Temperature Sensor 
 6. **Actuators:** Opto-isolated Relay Modules controlling a 230V Water Pump (P1) and a low-voltage Dosing Pump (P2) 
-7. **Indicators:** Status LEDs (Green, Red, Yellow) and Buzzers 
+7. **Indicators:** 6 Status LEDs (Green, Red, Blue, Yellow, White, Orange) and 2 Buzzers 
 8. **Switches:** Industrial-grade hardware override toggle switches 
 
 ---
@@ -55,14 +55,23 @@ AquaSYNC is designed to run completely autonomously. The core logic dictating th
 
 ---
 
-## 🚨 Smart Alarms (LED & Buzzer Logic)
+## 🚨 Smart Alarms & Status Indicators (LED & Buzzer)
 
-The system features a robust physical alert mechanism for critical conditions, utilizing LEDs and Buzzers to keep users informed without needing to check the app:
+The system features a robust physical alert mechanism utilizing 6 distinct LEDs and independent Buzzers to keep users fully informed of every parameter without needing to check the app:
 
-* **🟢 System OK:** Green LED ON, No Sound. (All parameters are within normal ranges).
-* **🔴 Source Tank Low (<10%):** Red LED ON, **Fast Beeping** Buzzer. (Pump P1 is auto-disabled to protect the motor).
-* **🔴 Main Tank Very Low (<5%):** Red LED ON, **Slow Beeping** Buzzer. (Immediate refill required).
-* **🟡 High Temperature (>30°C):** Yellow LED ON, **Intermittent Beep**. (Water temperature has exceeded safe limits).
+### 💧 Water Level Status
+* **🟢 Green LED (System OK):** Main tank is sufficiently filled (≥ 80%).
+* **🔴 Red LED (Critical Level):** Water level is dangerously low.
+  * *Fast Beeping Buzzer:* Source tank < 10% (Pump P1 auto-disabled to protect motor).
+  * *Slow Beeping Buzzer:* Main tank < 5% (Immediate refill required).
+
+### 🌡️ Temperature Status
+* **🔵 Blue LED (Optimal):** Water temperature is safe and normal (≤ 30°C).
+* **🟡 Yellow LED (Warning):** High temperature alert (> 30°C). Activates an **intermittent buzzer beep**.
+
+### 🧪 pH Quality Status
+* **⚪ White LED (Optimal):** Water pH is perfectly balanced (between 6.0 and 8.0).
+* **🟠 Orange LED (Warning):** pH is out of bounds (< 6.0 or > 8.0). Automated dosing correction required.
 
 ---
 
