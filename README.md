@@ -76,16 +76,16 @@ AquaSYNC employs a **distributed processing architecture** that separates real-t
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                          EDGE LAYER                                      │
-│                                                                          │
-│   ┌──────────────────┐   UART Serial   ┌──────────────────────────┐    │
-│   │   Arduino Uno    │ ──────────────► │         ESP32            │    │
-│   │  (Sensor Hub)    │                 │   (Gateway & Control)    │    │
-│   │                  │                 │                          │    │
-│   │  • HC-SR04 (×2)  │                 │  • DS18B20 (1-Wire)      │    │
-│   │  • pH Probe      │                 │  • Relay Module (×2)     │    │
-│   │  • EMI Filtering │                 │  • Wi-Fi 2.4GHz          │    │
-│   └──────────────────┘                 └──────────┬───────────────┘    │
+│                          EDGE LAYER                                     │
+│                                                                         │
+│   ┌──────────────────┐   UART Serial   ┌──────────────────────────┐     │
+│   │   Arduino Uno    │ ──────────────► │         ESP32            │     │
+│   │  (Sensor Hub)    │                 │   (Gateway & Control)    │     │
+│   │                  │                 │                          │     │
+│   │  • HC-SR04 (×2)  │                 │  • DS18B20 (1-Wire)      │     │
+│   │  • pH Probe      │                 │  • Relay Module (×2)     │     │
+│   │  • EMI Filtering │                 │  • Wi-Fi 2.4GHz          │     │
+│   └──────────────────┘                 └──────────┬───────────────┘     │
 │                                                    │                    │
 └────────────────────────────────────────────────────┼────────────────────┘
                                                      │
@@ -97,14 +97,14 @@ AquaSYNC employs a **distributed processing architecture** that separates real-t
           │                              │   (WebSocket Sync)   │       │
           │                              └──────────┬───────────┘       │
           │                                         │                   │
-          │                              ┌──────────▼───────────┐       │
-          │                              │  Mobile & Web Dashboard│      │
-          │                              └──────────────────────┘       │
-          └──────────────────────────────────────────────────────────────┘
+          │                              ┌──────────▼─────────────┐     │
+          │                              │  Mobile & Web Dashboard│     │
+          │                              └────────────────────────┘     │
+          └─────────────────────────────────────────────────────────────┘
           
           ┌──────────────────────────────────────────────────────────────┐
           │              LOCAL INTERFACE LAYER                           │
-          │     20×4 I2C LCD Display  │  6-LED Matrix  │  Dual Buzzer   │
+          │     20×4 I2C LCD Display  │  6-LED Matrix  │  Dual Buzzer    │
           └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -349,13 +349,13 @@ AquaSYNC/
 
 <div align="center">
 
-| Student ID | Core Contribution | Details |
+| Student Name | Core Contribution | Details |
 |:---:|:---|:---|
-| **IT25100021** | ⚙️ Hardware Integration & Pump Control | Set up the physical water transport system by connecting pumps and relays to the ESP32, ensuring reliable actuation logic |
-| **IT25100204** | 📟 LCD Interface & Display Logic | Wired and programmed the 20×4 LCD display to render real-time sensor data streamed from the ESP32 |
-| **IT25100393** | 📡 Ultrasonic Sensing & Cloud Dashboard | Calibrated the HC-SR04 ultrasonic sensors for accurate tank level calculation and engineered the Blynk IoT dashboard |
-| **IT25101860** | 🧪 pH Sensing & Water Quality Analytics | Integrated the pH sensor module to monitor water chemistry and transmit quality data readings to the ESP32 |
-| **IT25101879** | 🌡️ Temperature Sensing & Data Transmission | Connected and configured the DS18B20 waterproof temperature probe and implemented reliable 1-Wire data transmission to the ESP32 |
+| **Viraj** | ⚙️ Hardware Integration & Pump Control | Set up the physical water transport system by connecting pumps and relays to the ESP32, ensuring reliable actuation logic |
+| **Sithmi** | 📟 LCD Interface & Display Logic | Wired and programmed the 20×4 LCD display to render real-time sensor data streamed from the ESP32 |
+| **Tharusha** | 📡 Ultrasonic Sensing & Cloud Dashboard | Calibrated the HC-SR04 ultrasonic sensors for accurate tank level calculation and engineered the Blynk IoT dashboard |
+| **Kisal** | 🧪 pH Sensing & Water Quality Analytics | Integrated the pH sensor module to monitor water chemistry and transmit quality data readings to the ESP32 |
+| **Hasandi** | 🌡️ Temperature Sensing & Data Transmission | Connected and configured the DS18B20 waterproof temperature probe and implemented reliable 1-Wire data transmission to the ESP32 |
 
 </div>
 
